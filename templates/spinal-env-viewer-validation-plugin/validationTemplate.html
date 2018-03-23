@@ -1,0 +1,29 @@
+<md-list style="height: 400px;overflow-y: auto">
+  <div ng-if="validationGroupList.lenght != 0" ng-repeat="theme in validationGroupList">
+    <md-list-item ng-click="pickGroup(theme)" class="md-1-line">
+      <!-- ng-attr-style="{{selectedStyle(theme)}}" -->
+      <p>
+        <i class="fa fa-caret-right"></i>
+        &nbsp; {{theme.name}}
+      </p>
+
+      <md-button aria-label="Fermer" class="md-secondary i_btn" ng-click="start(theme)">
+        <md-tooltip>Start validation</md-tooltip>
+        <i class="fa fa-check"></i>
+      </md-button>
+
+      <md-button aria-label="Fermer" class="md-secondary i_btn" ng-click="parametter(theme)">
+
+        <md-tooltip>Parametter of validation</md-tooltip>
+        <i class="fa fa-list-alt"></i>
+      </md-button>
+
+      <md-button aria-label="Fermer" class="md-secondary i_btn" ng-click="deleteGroup(theme)">
+        <!-- TO DO -->
+        <md-tooltip>Delete </md-tooltip>
+        <i class="fa fa-trash"></i>
+      </md-button>
+
+    </md-list-item>
+  </div>
+</md-list>

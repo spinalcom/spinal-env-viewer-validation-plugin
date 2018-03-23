@@ -2,7 +2,7 @@
   let appSpinalforgePlugin = angular.module('app.spinalforge.plugin');
   appSpinalforgePlugin.run(["$rootScope", "$compile", "$templateCache", "$http", "spinalRegisterViewerPlugin",
     function ($rootScope, $compile, $templateCache, $http, spinalRegisterViewerPlugin) {
-      spinalRegisterViewerPlugin.register("PannelGroupArrange");
+      spinalRegisterViewerPlugin.register("PanelValidation");
       let load_template = (uri, name) => {
         $http.get(uri).then((response) => {
           $templateCache.put(name, response.data);
@@ -11,8 +11,8 @@
         });
       };
       let toload = [{
-        uri: '../templates/spinal-env-viewer-group-arrange/groupArrangeTemplate.html', // à modifié lors de la création pannel
-        name: 'groupArrangeTemplate.html'
+        uri: '../templates/spinal-env-viewer-validation-plugin/validationTemplate.html', // à modifié lors de la création pannel
+        name: 'validationTemplate.html'
       }];
 
       // , {
@@ -23,7 +23,7 @@
         load_template(toload[i].uri, toload[i].name);
       }
 
-      class PannelGroupArrange {
+      class PanelValidation {
         constructor(viewer, options) {
           Autodesk.Viewing.Extension.call(this, viewer, options);
           this.viewer = viewer;
@@ -52,9 +52,9 @@
         }
 
         createUI() {
-          var title = 'group arrange';
+          var title = 'validation';
           this.panel = new PanelClass(this.viewer, title);
-          var button1 = new Autodesk.Viewing.UI.Button('group arrange');
+          var button1 = new Autodesk.Viewing.UI.Button('validation');
 
           button1.onClick = (e) => {
             if (!this.panel.isVisible()) {
@@ -65,13 +65,13 @@
           };
 
           button1.addClass('fa');
-          button1.addClass('fa-list-alt');
+          button1.addClass('fa-check-circle');
           button1.addClass('fa-2x');
-          button1.setToolTip('group-arrange');
+          button1.setToolTip('validation');
 
-          this.subToolbar = this.viewer.toolbar.getControl("spinalcom");
+          this.subToolbar = this.viewer.toolbar.getControl("spinalcom2");
           if (!this.subToolbar) {
-            this.subToolbar = new Autodesk.Viewing.UI.ControlGroup('spnalcom');
+            this.subToolbar = new Autodesk.Viewing.UI.ControlGroup('spnalcom2');
             this.viewer.toolbar.addControl(this.subToolbar);
           }
           this.subToolbar.addControl(button1);
@@ -85,16 +85,20 @@
           _container.style.overflowY = 'auto';
           this.panel.container.appendChild(_container);
 
-          $(_container).html("<div ng-controller=\"groupArrangeCtrl\" ng-cloak>" +
-            $templateCache.get("groupArrangeTemplate.html") + "</div>");
+          $(_container).html("<div ng-controller=\"validationCtrl\" ng-cloak>" +
+            $templateCache.get("validationTemplate.html") + "</div>");
           $compile($(_container).contents())($rootScope);
         }
       } // end class
 
-      Autodesk.Viewing.theExtensionManager.registerExtension('PannelGroupArrange', PannelGroupArrange);
+      Autodesk.Viewing.theExtensionManager.registerExtension('PanelValidation', PanelValidation);
     } // end run
   ]);
 
+  require("./parameterModel.js");
+  require("./validationCtrl.js");
+  require("./parametterFactory.js");
+  require("./parametterCtrl");
   // require("./moussa_template/main.js");
 
 

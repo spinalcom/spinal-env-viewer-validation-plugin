@@ -1,0 +1,39 @@
+<md-subheader>
+  <md-content style="height: inherit;cursor: auto;">
+    <md-list flex style="padding: 0;">
+      <md-list-item class="md-1-line" style="padding: 0 8px;">
+        <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+          <md-button class="md-fab" aria-label="btn.label" style="height: 40px; width: 40px; padding:0;" ng-click="addParameter(selectedObject)">
+            <md-tooltip>Add sort parameter</md-tooltip>
+            <ng-md-icon icon="note_add" style="fill:white; height: 24px;"></ng-md-icon>
+          </md-button>
+        </section>
+      </md-list-item>
+    </md-list>
+</md-subheader>
+
+
+<md-list style="height: 400px;overflow-y: auto">
+  <div ng-if="allParameter.lenght != 0" ng-repeat="parameter in allParameter">
+    <md-list-item class="md-1-line">
+
+      <p class="truncate">
+        <md-tooltip>{{parameter.name}}</md-tooltip>
+        <i class="fa fa-caret-right"></i>
+        &nbsp; {{parameter.name}}
+      </p>
+
+      <p>
+        {{parameter.value}}
+      </p>
+
+      <md-button aria-label="Fermer" class="md-secondary i_btn no-pad" ng-click="deleteParameter(parameter)">
+        <md-tooltip>Delete all item in the referencial</md-tooltip>
+        <i class="fa fa-trash"></i>
+      </md-button>
+
+
+
+    </md-list-item>
+  </div>
+</md-list>
