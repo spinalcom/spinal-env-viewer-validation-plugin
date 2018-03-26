@@ -26,7 +26,7 @@ import {
               $scope.referencial = $scope.selectedAlert.referencial;
             }
 
-            console.log("ici est la liste des allObject");
+            // console.log("ici est la liste des allObject");
             // console.log($scope.selectedAlert);
             // console.log($scope.selectedObject);
             $scope.allObject = mod.allObject;
@@ -37,27 +37,28 @@ import {
         }
 
 
+
         $scope.addParameter = (theme) => {
 
           $mdDialog.show($mdDialog.prompt()
-              .title("add Group")
+              .title("Add attributes")
               .placeholder('Please enter the Name')
-              .ariaLabel('Add Theme')
+              .ariaLabel('Add attributes')
               .clickOutsideToClose(true)
               .required(true)
               .ok('Confirm').cancel('Cancel'))
             .then(function (result) {
 
-              console.log(theme);
-              console.log(result);
+              // console.log(theme);
+              // console.log(result);
               let newParameter = new parameterGroup();
               newParameter.name.set(result);
               newParameter.value.set(0);
               if (theme.parameter) {
-                console.log(theme.parameter);
+                // console.log(theme.parameter);
                 theme.parameter.push(newParameter);
               } else {
-                console.log("sortparameter doesn't exist");
+                // console.log("sortparameter doesn't exist");
                 theme.add_attr({
                   parameter: []
                 });
@@ -68,8 +69,8 @@ import {
         };
 
         $scope.onModelChange = () => {
-          console.log("ici est onModelChange de parameter");
-          console.log($scope.selectedObject);
+          // console.log("ici est onModelChange de parameter");
+          // console.log($scope.selectedObject);
           $scope.allParameter = [];
           for (let i = 0; i < $scope.selectedObject.parameter.length; i++) {
             $scope.allParameter.push($scope.selectedObject.parameter[i]);

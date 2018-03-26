@@ -66,7 +66,7 @@ angular.module('app.spinalforge.plugin')
             selectedObject = _selectedObject;
             this.panel.setVisible(true);
             if (!_selectedObject)
-              this.panel.setTitle(note.name + " - " + "referencial");
+              this.panel.setTitle(note.name + " - " + "Filter");
             else
               this.panel.setTitle(_selectedObject.name + -note.name);
 
@@ -76,7 +76,7 @@ angular.module('app.spinalforge.plugin')
             currentNote = note;
             selectedObject = _selectedObject;
             if (!_selectedObject)
-              this.panel.setTitle(note.name + " - " + "referencial");
+              this.panel.setTitle(note.name + " - " + "Filter");
             else
               this.panel.setTitle(_selectedObject.name + " Group : " + note.name);
 

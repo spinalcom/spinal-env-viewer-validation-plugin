@@ -1,7 +1,7 @@
 (function () {
   angular.module('app.spinalforge.plugin')
-    .controller('validationCtrl', ["$scope", "$rootScope", "$mdToast", "$mdDialog", "authService", "$compile", "$injector", "layout_uid", "spinalModelDictionary", "$q", "parametterService",
-      function ($scope, $rootScope, $mdToast, $mdDialog, authService, $compile, $injector, layout_uid, spinalModelDictionary, $q, parametterService) {
+    .controller('validationCtrl', ["$scope", "$rootScope", "$mdToast", "$mdDialog", "authService", "$compile", "$injector", "layout_uid", "spinalModelDictionary", "$q", "parametterService", "donutService", "allObjectService",
+      function ($scope, $rootScope, $mdToast, $mdDialog, authService, $compile, $injector, layout_uid, spinalModelDictionary, $q, parametterService, donutService, allObjectService) {
 
         var viewer = v;
         $scope.validationGroup = null; // path to forgefile.validationPlugin
@@ -15,15 +15,12 @@
             // console.log(m.validationPlugin);
             if (m.validationPlugin) {
               m.validationPlugin.load((mod) => {
-                console.log("ON CHARGE LES DONNEE PRESENTE DANS validation PLUGIN");
-                console.log(mod);
                 $scope.validationGroup = mod;
                 $scope.validationGroup.bind($scope.onModelChange);
                 // $scope.selectGroup = mod;
                 // $scope.selectGroup.bind($scope.onModelChange);
               });
             } else {
-              console.log("delete of validation plugin");
               $scope.validationGroup = new Lst();
               m.add_attr({
                 validationPlugin: new Ptr($scope.validationGroup)
@@ -42,24 +39,45 @@
             const group = $scope.validationGroup[i];
             $scope.validationGroupList.push(group);
           }
+
+
+          // // console.log("referencial change");
+          // let innerGroup = true;
+          // let group = $scope.selectedObject.group;
+          // var referencial = $scope.selectedObject.referencial.allObject;
+          // for (let j = 0; j < group.length; j++) { // all group
+          //   group[j].allObject.clear();
+          // }
+          // for (let i = 0; i < referencial.length; i++) { // all referencial object
+          //   const refObject = referencial[i];
+          //   for (let j = 0; j < group.length; j++) { // all group
+          //     if (refObject.group.get() == group[j].id.get())
+          //       group[j].allObject.push(refObject);
+          //   }
+          // }
+          // $scope.referencial = $scope.selectedObject.referencial;
+          // // console.log("end referencial change");
+        };
+
+        $scope.viewAllObject = (selectGroup) => {
+
+          allObjectService.hideShowPanel(selectGroup);
         };
 
         $scope.start = (theme) => {
-          console.log(theme);
-          console.log(viewer);
+          // console.log(theme);
+          // console.log(viewer);
           $scope.allParameter = [];
           $scope.valide = false;
           for (let i = 0; i < theme.parameter.length; i++) {
             $scope.allParameter.push(theme.parameter[i]);
           }
 
-          console.log($scope.allParameter);
+          // console.log($scope.allParameter);
 
           for (let i = 0; i < theme.allObject.length; i++) { // on verifie parmi tous les item du referenciel si les attribut sont présent, on check pas encore la value
             const bimObject = theme.allObject[i];
             viewer.getProperties(bimObject.dbId.get(), (result) => { // result est les properties du bim object
-              console.log('there is all properties');
-              console.log(result);
               $scope.valide = true;
               let validation = false;
               let partValidation = false;
@@ -92,7 +110,7 @@
               });
 
               if ($scope.valide) {
-                console.log("validation");
+                // console.log("validation");
                 if ($scope.partValide) {
                   for (let l = 0; l < theme.group.length; l++) {
                     const group = theme.group[l];
@@ -105,37 +123,64 @@
 
 
 
-                    if (group.name.get() == "Present" || group.name.get() == "present")
+                    if (group.name.get() == "Présent" || group.name.get() == "présent")
                       bimObject.group.set(group.id.get());
                   }
                 }
 
 
               } else {
-                console.log("invalide");
+                // console.log("invalide");
                 for (let l = 0; l < theme.group.length; l++) {
                   const group = theme.group[l];
-                  if (group.name.get() == "Non present" || group.name.get() == "non present")
+                  if (group.name.get() == "Non présent" || group.name.get() == "non présent")
                     bimObject.group.set(group.id.get());
                 }
               }
 
             }, (err) => {
-              console.log("error to get all properties with dbid");
-              console.log(err);
+              // console.log("error to get all properties with dbid");
+              // console.log(err);
             });
 
           }
         };
 
+        $scope.viewAllAlert = (groupAlert) => {
+          // console.log("ViewAllAlert");
+          // console.log(groupAlert);
+          let tab = [];
+          if (groupAlert.referencial.display.get()) {
+            for (let i = 0; i < groupAlert.group.length; i++) {
+              const alert = groupAlert.group[i];
+              alert.display.set(false);
+            }
+            groupAlert.referencial.display.set(false);
+          } else {
+            for (let i = 0; i < groupAlert.group.length; i++) {
+              const alert = groupAlert.group[i];
+              alert.display.set(true);
+            }
+            groupAlert.referencial.display.set(true);
+          }
+        };
+
+
+        $scope.donut = (groupArrange) => {
+
+          donutService.hideShowPanel("donutCtrl", "donutTemplate.html", groupArrange);
+          // donutService.hideShowPanel("donutCtrl", "donutTemplate.html", groupArrange);
+        };
+
+
         $scope.parametter = (theme) => {
-          console.log(theme);
-          console.log("lala");
+          // console.log(theme);
+          // console.log("lala");
           parametterService.hideShowPanel(theme);
         };
 
         $scope.deleteGroup = (theme) => {
-          console.log(theme)
+          // console.log(theme)
 
           // console.log(note);
           var dialog = $mdDialog.confirm()
@@ -149,7 +194,7 @@
 
               for (let i = 0; i < $scope.validationGroupList.length; i++) {
                 const element = $scope.validationGroupList[i];
-                console.log(element);
+                // console.log(element);
                 if (element._server_id == theme._server_id)
                   $scope.validationGroup.splice(i, 1);
               }

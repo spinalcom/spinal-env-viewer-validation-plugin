@@ -52,9 +52,9 @@
         }
 
         createUI() {
-          var title = 'validation';
+          var title = 'SpinalBIM Analyzer';
           this.panel = new PanelClass(this.viewer, title);
-          var button1 = new Autodesk.Viewing.UI.Button('validation');
+          var button1 = new Autodesk.Viewing.UI.Button('SpinalBIM Analyzer');
 
           button1.onClick = (e) => {
             if (!this.panel.isVisible()) {
@@ -67,7 +67,7 @@
           button1.addClass('fa');
           button1.addClass('fa-check-circle');
           button1.addClass('fa-2x');
-          button1.setToolTip('validation');
+          button1.setToolTip('Analyzer');
 
           this.subToolbar = this.viewer.toolbar.getControl("spinalcom2");
           if (!this.subToolbar) {
