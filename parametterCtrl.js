@@ -26,14 +26,9 @@ import {
               $scope.referencial = $scope.selectedAlert.referencial;
             }
 
-            // console.log("ici est la liste des allObject");
-            // console.log($scope.selectedAlert);
-            // console.log($scope.selectedObject);
             $scope.allObject = mod.allObject;
-            // $scope.$apply();
             $scope.selectedObject.bind($scope.onModelChange);
           }
-          // $scope.openAlertList();
         }
 
 
@@ -49,28 +44,21 @@ import {
               .ok('Confirm').cancel('Cancel'))
             .then(function (result) {
 
-              // console.log(theme);
-              // console.log(result);
               let newParameter = new parameterGroup();
               newParameter.name.set(result);
               newParameter.value.set(0);
               if (theme.parameter) {
-                // console.log(theme.parameter);
                 theme.parameter.push(newParameter);
               } else {
-                // console.log("sortparameter doesn't exist");
                 theme.add_attr({
                   parameter: []
                 });
                 theme.parameter.push(newParameter);
-                // theme.add_attr(parameter);
               }
             }, () => {});
         };
 
         $scope.onModelChange = () => {
-          // console.log("ici est onModelChange de parameter");
-          // console.log($scope.selectedObject);
           $scope.allParameter = [];
           for (let i = 0; i < $scope.selectedObject.parameter.length; i++) {
             $scope.allParameter.push($scope.selectedObject.parameter[i]);
@@ -83,8 +71,6 @@ import {
             if (parameter.name.get() == element.name.get())
               $scope.selectedObject.parameter.splice(i, 1);
           }
-
-
         };
 
       }

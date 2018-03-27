@@ -11,14 +11,10 @@
         spinalModelDictionary.init().then((m) => {
           console.log("spinal model dictionary");
           if (m) {
-            // console.log(m);
-            // console.log(m.validationPlugin);
             if (m.validationPlugin) {
               m.validationPlugin.load((mod) => {
                 $scope.validationGroup = mod;
                 $scope.validationGroup.bind($scope.onModelChange);
-                // $scope.selectGroup = mod;
-                // $scope.selectGroup.bind($scope.onModelChange);
               });
             } else {
               $scope.validationGroup = new Lst();
@@ -39,24 +35,6 @@
             const group = $scope.validationGroup[i];
             $scope.validationGroupList.push(group);
           }
-
-
-          // // console.log("referencial change");
-          // let innerGroup = true;
-          // let group = $scope.selectedObject.group;
-          // var referencial = $scope.selectedObject.referencial.allObject;
-          // for (let j = 0; j < group.length; j++) { // all group
-          //   group[j].allObject.clear();
-          // }
-          // for (let i = 0; i < referencial.length; i++) { // all referencial object
-          //   const refObject = referencial[i];
-          //   for (let j = 0; j < group.length; j++) { // all group
-          //     if (refObject.group.get() == group[j].id.get())
-          //       group[j].allObject.push(refObject);
-          //   }
-          // }
-          // $scope.referencial = $scope.selectedObject.referencial;
-          // // console.log("end referencial change");
         };
 
         $scope.viewAllObject = (selectGroup) => {
@@ -65,15 +43,13 @@
         };
 
         $scope.start = (theme) => {
-          // console.log(theme);
-          // console.log(viewer);
           $scope.allParameter = [];
           $scope.valide = false;
-          for (let i = 0; i < theme.parameter.length; i++) {
-            $scope.allParameter.push(theme.parameter[i]);
+          if (theme.parameter) {
+            for (let i = 0; i < theme.parameter.length; i++) {
+              $scope.allParameter.push(theme.parameter[i]);
+            }
           }
-
-          // console.log($scope.allParameter);
 
           for (let i = 0; i < theme.allObject.length; i++) { // on verifie parmi tous les item du referenciel si les attribut sont présent, on check pas encore la value
             const bimObject = theme.allObject[i];
@@ -147,8 +123,6 @@
         };
 
         $scope.viewAllAlert = (groupAlert) => {
-          // console.log("ViewAllAlert");
-          // console.log(groupAlert);
           let tab = [];
           if (groupAlert.referencial.display.get()) {
             for (let i = 0; i < groupAlert.group.length; i++) {
@@ -169,20 +143,14 @@
         $scope.donut = (groupArrange) => {
 
           donutService.hideShowPanel("donutCtrl", "donutTemplate.html", groupArrange);
-          // donutService.hideShowPanel("donutCtrl", "donutTemplate.html", groupArrange);
         };
 
 
         $scope.parametter = (theme) => {
-          // console.log(theme);
-          // console.log("lala");
           parametterService.hideShowPanel(theme);
         };
 
         $scope.deleteGroup = (theme) => {
-          // console.log(theme)
-
-          // console.log(note);
           var dialog = $mdDialog.confirm()
             .ok("Delete !")
             .title('Do you want to remove it?')
